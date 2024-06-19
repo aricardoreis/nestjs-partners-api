@@ -1,3 +1,4 @@
+### EVENTS ###
 GET http://localhost:3000/events
 
 ###
@@ -23,11 +24,43 @@ PATCH http://localhost:3000/events/{{eventId}}
 Content-Type: application/json
 
 {
-    "name": "Novo Evento",
-    "description": "Recife",
-    "date": "2024-07-02T00:00:00",
-    "price": 51.90
+    "name": "Ramones",
+    "description": "Campo Grande",
+    "date": "2024-09-28T00:00:00",
+    "price": 151.90
 }
 
 ###
 DELETE http://localhost:3000/events/{{eventId}}
+
+###
+@eventId = 6d340b57-6347-4947-8d83-9a71bb1aa2ae
+
+### SPOTS ###
+GET http://localhost:3000/events/{{eventId}}/spots
+
+###
+# @name createSpot
+POST http://localhost:3000/events/{{eventId}}/spots
+Content-Type: application/json
+
+{
+    "name": "New Spot"
+}
+
+###
+@spotId = {{ createSpot.response.body.id }}
+
+###
+GET http://localhost:3000/events/{{eventId}}/spots/{{spotId}}
+
+###
+PATCH http://localhost:3000/events/{{eventId}}/spots/{{spotId}}
+Content-Type: application/json
+
+{
+    "name": "A1"
+}
+
+###
+DELETE http://localhost:3000/events/{{eventId}}/spots/{{spotId}}
