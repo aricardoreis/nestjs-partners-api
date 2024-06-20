@@ -14,27 +14,62 @@ datasource db {
 }
 
 model Event {
-  id String @id @default(uuid())
-  name String
+  id          String   @id @default(uuid())
+  name        String
   description String
-  date DateTime
-  price Float
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-  Spot Spot[]
+  date        DateTime
+  price       Float
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  Spot        Spot[]
 }
 
 model Spot {
-  id String @id @default(uuid())
-  name String
-  status SpotStatus
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-  eventId String
-  Event Event @relation(fields: [eventId], references: [id])
+  id                 String               @id @default(uuid())
+  name               String
+  status             SpotStatus
+  createdAt          DateTime             @default(now())
+  updatedAt          DateTime             @updatedAt
+  eventId            String
+  Event              Event                @relation(fields: [eventId], references: [id])
+  Ticket             Ticket?
+  ReservationHistory ReservationHistory[]
 }
 
 enum SpotStatus {
   available
   reserved
+}
+
+model Ticket {
+  id        String     @id @default(uuid())
+  email     String
+  kind      TicketKind
+  createdAt DateTime   @default(now())
+  updatedAt DateTime   @updatedAt
+  spotId    String
+  Spot      Spot       @relation(fields: [spotId], references: [id])
+
+  @@unique([spotId])
+}
+
+model ReservationHistory {
+  id        String       @id @default(uuid())
+  email     String
+  kind      TicketKind
+  status    TicketStatus
+  createdAt DateTime     @default(now())
+  updatedAt DateTime     @updatedAt
+  spotId    String
+  Spot      Spot         @relation(fields: [spotId], references: [id])
+}
+
+enum TicketKind {
+  full
+  half
+}
+
+enum TicketStatus {
+  reserved
+  canceled
 }
