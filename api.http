@@ -33,9 +33,6 @@ Content-Type: application/json
 ###
 DELETE http://localhost:3000/events/{{eventId}}
 
-###
-@eventId = 6d340b57-6347-4947-8d83-9a71bb1aa2ae
-
 ### SPOTS ###
 GET http://localhost:3000/events/{{eventId}}/spots
 
@@ -50,6 +47,7 @@ Content-Type: application/json
 
 ###
 @spotId = {{ createSpot.response.body.id }}
+@spotName = {{ createSpot.response.body.name }}
 
 ###
 GET http://localhost:3000/events/{{eventId}}/spots/{{spotId}}
@@ -64,3 +62,13 @@ Content-Type: application/json
 
 ###
 DELETE http://localhost:3000/events/{{eventId}}/spots/{{spotId}}
+
+###
+POST http://localhost:3000/events/{{eventId}}/reserve
+Content-Type: application/json
+
+{
+    "spots": ["{{spotName}}"],
+    "kind": "full",
+    "email": "john.snow@example.com"
+}
