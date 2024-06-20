@@ -11,8 +11,9 @@ services:
     image: mysql:8.0.37-debian
     environment:
       MYSQL_ROOT_PASSWORD: root
-      MYSQL_DATABASE: nest
+      # MYSQL_DATABASE: nest
     ports:
       - 3306:3306
-    # volumes:
-    #   - ./.docker/data:/var/lib/mysql
+    volumes:
+      - ./.docker/mysql:/docker-entrypoint-initdb.d
+      # - ./.docker/data:/var/lib/mysql
